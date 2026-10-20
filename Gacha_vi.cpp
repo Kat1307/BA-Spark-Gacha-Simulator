@@ -991,7 +991,7 @@ void pickUPrecruitment() {
     cout << "Hãy chọn số 1 hoặc 2 để roll" << endl;
     cout << "[1] Chiêu Mộ 1: 120 Pryo" << endl;
     cout << "[2] Chiêu Mộ 10: 1200 Pryo" << endl;
-    cout << "[3] Thiết Lập Banner Học Sinh (2/3/4)" << endl;
+    cout << "[3] Thiết Lập Banner Học Sinh (2/3/4/5)" << endl;
     cout << "[4] Đổi Banner Học Sinh (tốn 200 điểm chiêu mộ)" << endl;
     cout << "[5] Về Menu Chính" << endl;
     cout << " " << endl;

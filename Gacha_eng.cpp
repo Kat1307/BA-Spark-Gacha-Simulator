@@ -992,7 +992,7 @@ void pickUPrecruitment() {
     cout << "Please select 1 or 2 to roll" << endl;
     cout << "[1] Recruit 1: 120 Pryo" << endl;
     cout << "[2] Recruit 10: 1200 Pryo" << endl;
-    cout << "[3] Set rate-up students (2/3/4)" << endl;
+    cout << "[3] Set rate-up students (2/3/4/5)" << endl;
     cout << "[4] Redeem a rate-up student (cost 200 points)" << endl;
     cout << "[5] Back to main menu" << endl;
     cout << " " << endl;
