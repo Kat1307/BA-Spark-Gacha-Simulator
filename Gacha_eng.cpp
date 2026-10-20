@@ -12,6 +12,7 @@
 #include <thread>
 #include <chrono>
 #include <utility>
+#include <algorithm>
 
 
 using namespace std;
@@ -24,6 +25,16 @@ using namespace std;
 
 void mainmenu();
 
+void Invalid_choice() {
+    cout << " " << endl;
+    cout << "Invalid choice, only input 'y' is accepted" << endl;
+}
+
+void Invalid_choice2() {
+    cout << " " << endl;
+    cout << "Invalid choice, only input 'y' and 'n' is accepted" << endl;
+}
+
 void yes() {
     char i;
     cout << "Return menu now? (type 'y' if you wish to go back, if no, don't type it yet): ";
@@ -31,6 +42,10 @@ void yes() {
 
     if(i == 'y') {
         mainmenu();
+    } else {
+        Invalid_choice();
+        cout << " " << endl;
+        yes();
     }
 }
 
@@ -44,6 +59,10 @@ void quote() {
     } else if (z == 'n') {
         cout << "No? It's okay, you will experiencing it soon." << endl;
         yes();
+    } else {
+        Invalid_choice2();
+        cout << " " << endl;
+        quote();
     }
 }
 
@@ -228,7 +247,7 @@ void display5perRow() {
 }
 
 void createOwnedList() {
-    ifstream input("list/point_count.txt");
+    ifstream input("list/point_count.txt"); // Trigger file to read all pulls and append to owned list
     ofstream output("list/blue_archive_your_current_owned_student.txt");
 
     if (!input.is_open()) {
@@ -244,9 +263,9 @@ void createOwnedList() {
         if (line.empty()) continue;
 
         // Example line from point_count.txt: "3★  Hina (Swimsuit)"
-        // We need to extract the name and rarity
+        // We (if you are viewing my code) need to extract the name and rarity
 
-        // Find the position of "★"
+        // Find the position of "★" from point_count.txt each line
         size_t starPos = line.find("★");
         if (starPos == string::npos) continue;
 
@@ -265,7 +284,7 @@ void createOwnedList() {
 
     input.close();
 
-    // Write unique students to the new file
+    // Write unique student(s) to the current owned student file
     for (const string& student : uniqueStudents) {
         output << student << endl;
     }
@@ -618,7 +637,7 @@ void student_list() {
     }
     cout << "-----------------------------------" << endl;
 
-    //Clean lefover newline from previous cin >> so getline work correctly
+    //Clean lefover newline from previous cin >> so getline work correctly *important*
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     //Prompt user for multiple line numbers
@@ -828,18 +847,57 @@ bool isAlreadyOwned(const string& name, int rarity) {
     return false;
 }
 
+string trim(const string& s) {
+    size_t start = s.find_first_not_of(" \t\r\n");
+    if (start == string::npos) return "";
+    size_t end = s.find_last_not_of(" \t\r\n");
+    return s.substr(start, end - start + 1);
+}
+
+// Insert student into owned list in alphabetical order
 void appendOwnedIfNew(const Student& s) {
-    if (isAlreadyOwned(s.name, s.rarity)) {
-        cout << s.name << " is already in your owned list. Skipping append." << endl;
-        return;
+    string target = s.name + " " + to_string(s.rarity);
+
+    // Read all existing entries (normalized / trimmed whitespaces)
+    vector<string> owned;
+    ifstream in("list/blue_archive_your_current_owned_student.txt");
+    if (in.is_open()) {
+        string line;
+        while (getline(in, line)) {
+            string cleaned = trim(line);
+            if (!cleaned.empty()) {
+                owned.push_back(cleaned);
+            }
+        }
+        in.close();
     }
 
-    ofstream out("list/blue_archive_your_current_owned_student.txt", ios::app);
-    if (out.is_open()) {
-        out << s.name << " " << s.rarity << endl;
-        out.close();
-        cout << s.name << " added to owned list." << endl;
+    // Already owned? skip
+    for (const string& entry : owned) {
+        if (entry == target) {
+            cout << s.name << " is already in your owned list. Skipping." << endl;
+            return;
+        }
     }
+
+    // Add the new student
+    owned.push_back(target);
+
+    // Sort alphabetically by full "Name Rarity" string
+    sort(owned.begin(), owned.end());
+
+    // Rewrite the whole file in sorted order (clean format, no leading spaces <== the txt file is fine is 2 whitespace before the name)
+    ofstream out("list/blue_archive_your_current_owned_student.txt", ios::trunc);
+    if (!out.is_open()) {
+        cerr << "Error: Could not open owned student list for writing." << endl;
+        return;
+    }
+    for (const string& entry : owned) {
+        out << entry << endl;
+    }
+    out.close();
+
+    cout << s.name << " added to owned list (sorted A-Z)." << endl;
 }
 
 //Redeem (spark) a rate-up student for 200 recruitment points
@@ -874,13 +932,13 @@ void redeemStudent() {
 
     Student redeemed = rateUpList[choice - 1];
 
-    //Spend 200 points (remove oldest 200 puuls) giving you a free point
-    removePoints(200);
+    //Spend 200 points (remove oldest 200 pulls)
+    removePoints(201);
 
     //Record the pull in point_count (append)
     saveStudent("list/point_count.txt", redeemed);
 
-    //Append to owned list ONLY if not already there (prevent wipe existing content)
+    //Trunc sort to owned list ONLY if not already there
     appendOwnedIfNew(redeemed);
 
     cout << "\n*** REDEEMED: " << PURPLE << redeemed.name << RESET 
@@ -941,31 +999,68 @@ void pickUPrecruitment() {
 
     cin >> select;
 
-    if (select == 1 && pryoBl >= 120) {
-        pryoBl -=120;
+    
+char choose;
+char choose2;
+
+    if (select == 1) {
+        cout << " "<< endl;
+        cout << "Sensei, are you sure to spend 120 Pryo for a single pull? (y/n)" << endl;
+        cout << "You have " << pryoBl << " Pryo left" << endl;
+        cin >> choose;
+	} else if (select == 2) {
+        cout << " "<< endl;
+        cout << "Sensei, are you sure to spend 1200 Pryo for a ten-pull? (y/n)" << endl;
+        cout << "You have " << pryoBl << " Pryo left" << endl;
+        cin >> choose2;
+
+    }
+
+     if (choose == 'y' && pryoBl >= 120) {  //This is the single pull option
+		pryoBl -=120;
         savePryoBalance();
         recruit1();
         cout << "Pryo left: " << pryoBl << endl;
+        cin.ignore();
         askOPi();
+        cin.ignore();
 
-    } else if (select ==1 && pryoBl < 120) {
-        cout << "You are broke, Sensei" << endl;
+	} else if (choose == 'y' && pryoBl < 120) {
+		cout << "You are broke, Sensei" << endl;
         cout << "Pryo left: " << pryoBl << endl;
+        cin.ignore();
         askOPi();
+        cin.ignore();
 
-    } else if (select == 2 && pryoBl >= 1200) {
-        pryoBl -=1200;
+	} else if (choose == 'n' ) {
+        pickUPrecruitment();
+        cin.ignore();
+
+    }
+
+      if (choose2 == 'y' && pryoBl >= 1200) { //This is the ten pull option
+		pryoBl -=1200;
         savePryoBalance();
         recruit10();
         cout << "Pryo left: " << pryoBl << endl;
+        cin.ignore();
         askOPi();
+        cin.ignore();
 
-    } else if (select == 2 && pryoBl < 1200) {
-        cout << "You are broke, Sensei, choose the single pull one instead" << endl;
+	} else if (choose2 == 'y' && pryoBl < 1200) {
+		cout << "You are broke, Sensei, choose the single pull one instead" << endl;
         cout << "Pryo left: " << pryoBl << endl;
+        cin.ignore();
         askOPi();
+        cin.ignore();
 
-    } else if(select == 3) {
+	}  else if (choose2 == 'n') {
+        pickUPrecruitment();
+        cin.ignore();
+
+    } 
+
+    if(select == 3) {
         setupRateUp();
         pickUPrecruitment();  //return to menu after setting
 
@@ -977,7 +1072,8 @@ void pickUPrecruitment() {
         mainmenu();
 
     } else {
-        cout << "Invalid number/typing choose either 1 or 2" << endl;
+        cout << " " << endl;
+        cout << "Invalid number/typing choose either a number in the range 1-5" << endl;
         pickUPrecruitment();
     }
 }
@@ -1010,7 +1106,7 @@ void mainmenu() {
         onlyVIEWonwedList();
     } else if (select == 5) {
         cout << "Press Enter to close the window..." << endl;
-        cin.get(); // Waits for the user to press Enter before continuing to exit (it didn't work)
+        cin.get(); // Waits for the user to press Enter before continuing to exit (it didn't work actually)
     } else if(select == 6) {
         quote();
     } else {

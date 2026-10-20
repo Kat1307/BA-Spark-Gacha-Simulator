@@ -6,6 +6,7 @@ Akari 2
 Akari (Năm mới) 3
 Ako 3
 Ako (Váy) 3
+Anna 3
 Arisu 3
 Arisu (Chiến đấu) 3
 Arisu (Hầu gái) 3
@@ -32,9 +33,10 @@ Eimi (Chiến đấu) 3
 Eimi (Đồ bơi) 3
 Eri 3
 Erika 3
+Erina 3
+Fubuki (Đồ bơi) 3
 Fuuka 2
 Fuuka (Năm mới) 3
-Fubuki (Đồ bơi) 3
 Fuyu 3
 Hanae 2
 Hanae (Giáng sinh) 3
@@ -81,12 +83,13 @@ Juri 1
 Juri (Làm thêm) 3
 Kaede 3
 Kaho 3
-Kanoe 3
 Kanna 3
 Kanna (Đồ bơi) 3
+Kanoe 3
 Karin 3
 Karin (Thỏ ngọc) 3
 Kasumi 3
+Kasumi (Đồ bơi) 3
 Kayoko 2
 Kayoko (Váy) 3
 Kayoko (Năm mới) 3
@@ -101,9 +104,11 @@ Kisaki 3
 Kisaki (Đồ bơi) 3
 Koharu 3
 Kokona 3
+Kokoro 3
 Konoka 3
 Kotama 1
 Kotama (Cắm trại) 3
+Kotone 3
 Kotori 1
 Kotori (Cổ động viên) 3
 Koyuki 3
@@ -160,7 +165,6 @@ Niya 3
 Noa 3
 Noa (Đồ ngủ) 3
 Nodoka (Suối nước nóng) 3
-Nonomi 2
 Nonomi (Đồ bơi) 3
 Nozomi 3
 Pina 1
@@ -220,6 +224,7 @@ Tsubaki 2
 Tsubaki (Hướng dẫn viên) 3
 Tsukuyo 3
 Tsukuyo (Váy) 3
+Tsumugi 3
 Tsurugi 3
 Ui 3
 Ui (Đồ bơi) 3

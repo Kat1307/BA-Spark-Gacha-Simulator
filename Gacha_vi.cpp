@@ -12,6 +12,7 @@
 #include <thread>
 #include <chrono>
 #include <utility>
+#include <algorithm>
 
 
 using namespace std;
@@ -24,6 +25,14 @@ using namespace std;
 
 void mainmenu();
 
+void Invalid_choice() {
+    cout << "Không hợp lệ, chỉ nhận đầu vào 'y' " << endl;
+}
+
+void Invalid_choice2() {
+    cout << "Không hợp lệ, chỉ nhận đầu vào 'y' và 'n'" << endl;
+}
+
 void yes() {
     char i;
     cout << "Quay lại menu? (nhập 'y' nếu bạn muốn quay lại, nếu không thì đừng nhập vội): ";
@@ -31,6 +40,10 @@ void yes() {
 
     if(i == 'y') {
         mainmenu();
+    } else {
+        Invalid_choice();
+        cout << " " << endl;
+        yes();
     }
 }
 
@@ -44,6 +57,10 @@ void quote() {
     } else if (z == 'n') {
         cout << "Không ư? Chẳng sao cả, bạn sẽ trải nghiệm nó sớm thôi." << endl;
         yes();
+    } else {
+        Invalid_choice2();
+        cout << " " << endl;
+        quote();
     }
 }
 
@@ -829,18 +846,57 @@ bool isAlreadyOwned(const string& name, int rarity) {
     return false;
 }
 
+string trim(const string& s) {
+    size_t start = s.find_first_not_of(" \t\r\n");
+    if (start == string::npos) return "";
+    size_t end = s.find_last_not_of(" \t\r\n");
+    return s.substr(start, end - start + 1);
+}
+
+// Insert student into owned list in alphabetical order
 void appendOwnedIfNew(const Student& s) {
-    if (isAlreadyOwned(s.name, s.rarity)) {
-        cout << s.name << " đã ở trong danh sách từ trước. Skip việc ghi dòng mới." << endl;
-        return;
+    string target = s.name + " " + to_string(s.rarity);
+
+    // Read all existing entries (normalized / trimmed whitespaces)
+    vector<string> owned;
+    ifstream in("list/blue_archive_your_current_owned_student_vi.txt");
+    if (in.is_open()) {
+        string line;
+        while (getline(in, line)) {
+            string cleaned = trim(line);
+            if (!cleaned.empty()) {
+                owned.push_back(cleaned);
+            }
+        }
+        in.close();
     }
 
-    ofstream out("list/blue_archive_your_current_owned_student_vi.txt", ios::app);
-    if (out.is_open()) {
-        out << s.name << " " << s.rarity << endl;
-        out.close();
-        cout << s.name << " đã thêm vào danh sách học sinh đã sở hữu hiện tại." << endl;
+    // Already owned? skip
+    for (const string& entry : owned) {
+        if (entry == target) {
+            cout << s.name << " đã có trong danh sách sở hữu." << endl;
+            return;
+        }
     }
+
+    // Add the new student
+    owned.push_back(target);
+
+    // Sort alphabetically by full "Name Rarity" string
+    sort(owned.begin(), owned.end());
+
+    // Rewrite the whole file in sorted order (clean format, no leading spaces <== the txt file is fine is 2 whitespace before the name)
+    ofstream out("list/blue_archive_your_current_owned_student_vi.txt", ios::trunc);
+    if (!out.is_open()) {
+        cerr << "Lỗi: Không thể mở file danh sách học sinh sở hữu để ghi." << endl;
+        return;
+    }
+    for (const string& entry : owned) {
+        out << entry << endl;
+    }
+    out.close();
+
+    cout << s.name << " đã thêm vào danh sách học sinh đã sở hữu (Theo thứ tự A-Z)." << endl;
 }
 
 //Redeem (spark) a rate-up student for 200 recruitment points
@@ -875,13 +931,13 @@ void redeemStudent() {
 
     Student redeemed = rateUpList[choice - 1];
 
-    //Spend 200 points (remove oldest 200 puuls) giving you a free point
-    removePoints(200);
+    //Spend 200 points (remove oldest 200 pulls)
+    removePoints(201);
 
     //Record the pull in point_count (append)
     saveStudent("list/point_count_vi.txt", redeemed);
 
-    //Append to owned list ONLY if not already there (prevent wipe existing content)
+    //Trunc sort to owned list ONLY if not already there
     appendOwnedIfNew(redeemed);
 
     cout << "\n*** ĐÃ ĐỔI: " << PURPLE << redeemed.name << RESET 
@@ -937,36 +993,74 @@ void pickUPrecruitment() {
     cout << "[2] Chiêu Mộ 10: 1200 Pryo" << endl;
     cout << "[3] Thiết Lập Banner Học Sinh (2/3/4)" << endl;
     cout << "[4] Đổi Banner Học Sinh (tốn 200 điểm chiêu mộ)" << endl;
-    cout << "[5] Back to main menu" << endl;
+    cout << "[5] Về Menu Chính" << endl;
     cout << " " << endl;
 
     cin >> select;
 
-    if (select == 1 && pryoBl >= 120) {
-        pryoBl -=120;
+
+
+char choose;
+char choose2;
+
+    if (select == 1) {
+        cout << " "<< endl;
+        cout << "Sensei, thầy có chắc là thầy muốn chi tiêu 120 Pryo cho một lần chiêu mộ? (y/n)" << endl;
+        cout << "Thầy còn " << pryoBl << " Pryo" << endl;
+        cin >> choose;
+	} else if (select == 2) {
+        cout << " "<< endl;
+        cout << "Sensei, thầy có chắc là thầy muốn chi tiêu 1200 Pryo cho một lần chiêu mộ 10? (y/n)" << endl;
+        cout << "Thầy còn " << pryoBl << " Pryo" << endl;
+        cin >> choose2;
+
+    }
+
+     if (choose == 'y' && pryoBl >= 120) {  //This is the single pull option
+		pryoBl -=120;
         savePryoBalance();
         recruit1();
-        cout << "Số đá Pryo còn lại: " << pryoBl << endl;
+        cout << "Pryo còn lại: " << pryoBl << endl;
+        cin.ignore();
         askOPi();
+        cin.ignore();
 
-    } else if (select ==1 && pryoBl < 120) {
-        cout << "'Sensei à, thầy chi hết tiền cho đồ chơi Gumdam hả?'" << endl;
-        cout << "Số đá Pryo còn lại: " << pryoBl << endl;
+	} else if (choose == 'y' && pryoBl < 120) {
+		cout << "Thầy nghèo quá, Sensei" << endl;
+        cout << "Pryo còn lại: " << pryoBl << endl;
+        cin.ignore();
         askOPi();
+        cin.ignore();
 
-    } else if (select == 2 && pryoBl >= 1200) {
-        pryoBl -=1200;
+	} else if (choose == 'n' ) {
+        pickUPrecruitment();
+        cin.ignore();
+
+    }
+
+      if (choose2 == 'y' && pryoBl >= 1200) { //This is the ten pull option
+		pryoBl -=1200;
         savePryoBalance();
         recruit10();
-        cout << "Số đá Pryo còn lại: " << pryoBl << endl;
+        cout << "Pryo còn lại: " << pryoBl << endl;
+        cin.ignore();
         askOPi();
+        cin.ignore();
 
-    } else if (select == 2 && pryoBl < 1200) {
-        cout << "Sensei à, thầy nghèo rớt mồng tơi quá, qua roll 1 lượt xem" << endl;
-        cout << "Số đá Pryo còn lại: " << pryoBl << endl;
+	} else if (choose2 == 'y' && pryoBl < 1200) {
+		cout << "Thầy nghèo quá, Sensei, hãy chọn lần chiêu mộ đơn thay vì 10" << endl;
+        cout << "Pryo còn lại: " << pryoBl << endl;
+        cin.ignore();
         askOPi();
+        cin.ignore();
 
-    } else if(select == 3) {
+	}  else if (choose2 == 'n') {
+        pickUPrecruitment();
+        cin.ignore();
+
+    } 
+
+    if(select == 3) {
         setupRateUp();
         pickUPrecruitment();  //return to menu after setting
 
@@ -978,7 +1072,8 @@ void pickUPrecruitment() {
         mainmenu();
 
     } else {
-        cout << "Số/chữ được nhập không hợp lệ, chỉ chọn số 1 hoặc 2" << endl;
+        cout << " " << endl;
+        cout << "Lựa chọn không hợp lệ, vui lòng chọn một chức năng trong khoảng 1-5" << endl;
         pickUPrecruitment();
     }
 }

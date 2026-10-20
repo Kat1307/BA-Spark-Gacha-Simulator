@@ -7,6 +7,7 @@ Akari 2
 Akari (New Year) 3
 Ako 3
 Ako (Dress) 3
+Anna 3
 Aoba 1
 Arisu 3
 Arisu (Battle) 3
@@ -23,8 +24,8 @@ Ayane 2
 Ayane (Swimsuit) 1
 Azusa 3
 Azusa (Swimsuit) 3
-Cherino (Hot Spring) 3
 Cherino 3
+Cherino (Hot Spring) 3
 Chiaki 3
 Chiaki (Swimsuit) 1
 Chihiro 3
@@ -37,10 +38,11 @@ Eimi (Battle) 3
 Eimi (Swimsuit) 3
 Eri 3
 Erika 3
-Fuuka 2
-Fuuka (New Year) 3
+Erina 3
 Fubuki 1
 Fubuki (Swimsuit) 3
+Fuuka 2
+Fuuka (New Year) 3
 Fuyu 3
 Hanae 2
 Hanae (Christmas) 3
@@ -94,13 +96,14 @@ Juri 1
 Juri (Part-Timer) 3
 Kaede 3
 Kaho 3
-Kanoe 3
 Kanna 3
 Kanna (Swimsuit) 3
+Kanoe 3
 Karin 3
 Karin (Bunny Girl) 3
 Karin (School Uniform) 1
 Kasumi 3
+Kasumi (Swimsuit) 3
 Kayoko 2
 Kayoko (Dress) 3
 Kayoko (New Year) 3
@@ -117,9 +120,11 @@ Kisaki (Swimsuit) 3
 Koharu 3
 Koharu (Swimsuit) 1
 Kokona 3
+Kokoro 3
 Konoka 3
 Kotama 1
 Kotama (Camping) 3
+Kotone 3
 Kotori 1
 Kotori (Cheerleader) 3
 Koyuki 3
@@ -248,6 +253,7 @@ Tsubaki 2
 Tsubaki (Guide) 3
 Tsukuyo 3
 Tsukuyo (Dress) 3
+Tsumugi 3
 Tsurugi 3
 Tsurugi (Swimsuit) 1
 Ui 3
