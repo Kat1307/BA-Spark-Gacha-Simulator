@@ -772,10 +772,10 @@ void setupRateUp() {
     cout << "----------------------------------------------" << endl;
 
     int howMany = 0;
-    cout << "\nHow many rate-up students? (2, 3, or 4): ";
+    cout << "\nHow many rate-up students? (2, 3, 4, or 5): ";
     cin >> howMany;
-    if (howMany < 2 || howMany > 4) {
-        cout << "Invalid number/typing. the selection MUST be 2, 3, or 4" << endl;
+    if (howMany < 2 || howMany > 5) {
+        cout << "Invalid number/typing. the selection MUST be 2, 3, 4, or 5" << endl;
         return;
     }
 

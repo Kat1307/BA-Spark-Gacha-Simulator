@@ -771,10 +771,10 @@ void setupRateUp() {
     cout << "----------------------------------------------" << endl;
 
     int howMany = 0;
-    cout << "\nSensei muốn bao nhiêu học sinh vào chạy banner? (2, 3, hay 4): ";
+    cout << "\nSensei muốn bao nhiêu học sinh vào chạy banner? (2, 3, 4, hay 5): ";
     cin >> howMany;
-    if (howMany < 2 || howMany > 4) {
-        cout << "Số/chữ được nhập không hợp lệ, chỉ CHỌN SỐ 2, 3, hoặc 4" << endl;
+    if (howMany < 2 || howMany > 5) {
+        cout << "Số/chữ được nhập không hợp lệ, chỉ CHỌN SỐ 2, 3, 4, hoặc 5" << endl;
         return;
     }
 
