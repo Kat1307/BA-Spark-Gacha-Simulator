@@ -19,6 +19,7 @@ Asuna (School Uniform) 3
 Atsuko 3
 Ayane 2
 Azusa 3
+Azusa (Racing) 3
 Azusa (Swimsuit) 3
 Cherino 3
 Cherino (Hot Spring) 3
@@ -54,6 +55,7 @@ Hasumi 2
 Hasumi (Swimsuit) 3
 Hibiki 3
 Hifumi 3
+Hifumi (Racing) 3
 Hifumi (Swimsuit) 3
 Hikari 3
 Himari 3

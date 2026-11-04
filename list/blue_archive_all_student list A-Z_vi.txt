@@ -23,6 +23,7 @@ Atsuko (Đồ bơi) 1
 Ayane 2
 Ayane (Đồ bơi) 1
 Azusa 3
+Azusa (Đua xe) 3
 Azusa (Đồ bơi) 3
 Cherino 3
 Cherino (Suối nước nóng) 3
@@ -63,6 +64,7 @@ Hatsune Miku 3
 Hibiki 3
 Hibiki (Cổ động viên) 1
 Hifumi 3
+Hifumi (Đua xe) 3
 Hifumi (Đồ bơi) 3
 Hikari 3
 Himari 3

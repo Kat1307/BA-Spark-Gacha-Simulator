@@ -19,6 +19,7 @@ Asuna (Đồng phục) 3
 Atsuko 3
 Ayane 2
 Azusa 3
+Azusa (Đua xe) 3
 Azusa (Đồ bơi) 3
 Cherino (Suối nước nóng) 3
 Cherino 3
@@ -54,6 +55,7 @@ Hasumi 2
 Hasumi (Đồ bơi) 3
 Hibiki 3
 Hifumi 3
+Hifumi (Đua xe) 3
 Hifumi (Đồ bơi) 3
 Hikari 3
 Himari 3

@@ -23,6 +23,7 @@ Atsuko (Swimsuit) 1
 Ayane 2
 Ayane (Swimsuit) 1
 Azusa 3
+Azusa (Racing) 3
 Azusa (Swimsuit) 3
 Cherino 3
 Cherino (Hot Spring) 3
@@ -63,6 +64,7 @@ Hatsune Miku 3
 Hibiki 3
 Hibiki (Cheerleader) 1
 Hifumi 3
+Hifumi (Racing) 3
 Hifumi (Swimsuit) 3
 Hikari 3
 Himari 3
