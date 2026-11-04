@@ -4,7 +4,6 @@
 #include <sstream>
 #include <string>
 #include <cmath>
-#include <cstdlib>
 #include <limits>
 #include <random>
 #include <iomanip>
@@ -13,6 +12,7 @@
 #include <chrono>
 #include <utility>
 #include <algorithm>
+#include <conio.h>
 
 
 using namespace std;
@@ -26,12 +26,12 @@ using namespace std;
 void mainmenu();
 
 void Invalid_choice() {
-    cout << " " << endl;
+    cout << endl;
     cout << "Invalid choice, only input 'y' is accepted" << endl;
 }
 
 void Invalid_choice2() {
-    cout << " " << endl;
+    cout << endl;
     cout << "Invalid choice, only input 'y' and 'n' is accepted" << endl;
 }
 
@@ -44,7 +44,7 @@ void yes() {
         mainmenu();
     } else {
         Invalid_choice();
-        cout << " " << endl;
+        cout << endl;
         yes();
     }
 }
@@ -61,7 +61,7 @@ void quote() {
         yes();
     } else {
         Invalid_choice2();
-        cout << " " << endl;
+        cout << endl;
         quote();
     }
 }
@@ -139,7 +139,7 @@ void display1() {
 
     // Step 3: Show student names
     cout << "\n              ===== Student Names =====" << endl;
-    cout << " " << endl;
+    cout << endl;
 
     count = 0;
     for (int i = start; i < lines.size(); i++) {
@@ -190,7 +190,7 @@ void display5perRow() {
 
     //RARITIES with color
     cout << "\n      ===== Rarity Reveal =====" << endl;
-    cout << " " << endl;
+    cout << endl;
 
     int count = 0;
     for (int i = start; i < lines.size(); i++) {
@@ -207,6 +207,7 @@ void display5perRow() {
         }
 
         count++;
+        this_thread::sleep_for(chrono::milliseconds(150));
         if (count % 5 == 0) {
             cout << endl;
         }
@@ -218,7 +219,9 @@ void display5perRow() {
 
     // Step 3: Show student names
     cout << "\n              ===== Student Names =====" << endl;
-    cout << " " << endl;
+    cout << endl;
+    this_thread::sleep_for(chrono::milliseconds(400));
+    cout << "Press any key to continue..." << endl;
 
     count = 0;
     for (int i = start; i < lines.size(); i++) {
@@ -238,6 +241,7 @@ void display5perRow() {
         }
 
         count++;
+        _getch();
         if (count % 5 == 0) {
             cout << endl;
         }
@@ -344,7 +348,7 @@ void removePoints(int amount) {
 void countLine() {
     int points = getCurrentPoints();
     // Output the final tally
-    cout << " " << endl;
+    cout << endl;
     cout << "Total recruitment points: " << points << endl;
 
 }
@@ -536,7 +540,7 @@ void recruit1() {
     countLine();
     createOwnedList();
 
-    cout << " " << endl;
+    cout << endl;
     cout << "\nAll pulls are saved to point_count.txt for counting points" << endl;
     cout << "Just recruited (just owned) student will be added in your current ownned list" << endl;
 }
@@ -643,7 +647,7 @@ void student_list() {
     //Prompt user for multiple line numbers
     cout << "\nEnter line numbers to export your current owned student (separated by spaces, e.g., '1 3 5'): " << endl;
     cout << "*WARNING: YOU ONLY DO THIS ONCE IF YOU DON'T HAVE OR WANTED TO CHANGE YOUR OWNED LIST (running this program first time)" << endl;
-    cout << " " << endl;
+    cout << endl;
     string inputBuffer;
     std::getline(cin, inputBuffer);
 
@@ -707,9 +711,9 @@ void menuloop() {
         cout << "Press Enter to close the window..." << endl;
         cin.get(); // Waits for the user to press Enter before continuing to exit
     } else {
-        cout << " " << endl;
+        cout << endl;
         cout << "Inviald number/typing. Please choose either from the range 1-6" << endl;
-        cout << " " << endl;
+        cout << endl;
         cout << "[1]: View or add Pryo balance " << endl;
         cout << "[2]: Create current owned student list (banner only)" << endl;
         cout << "[3]: Recruitment (Spark system)" << endl;
@@ -723,19 +727,22 @@ void menuloop() {
 void askOPi() {
 
     int select;
-    cout << " " << endl;
+    cout << endl;
     cout << "[1] Exit recruitment" << endl;
     cout << "[2] Stay" << endl;
-    cout << " " << endl;
+    cout << endl;
 
     cin >> select;
 
     if (select == 1) {
         mainmenu();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     } else if (select == 2) {
         pickUPrecruitment();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     } else {
         cout << "Inviald number/typing, please choose either 1 or 2" << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         askOPi();
     }
 }
@@ -988,14 +995,14 @@ void pickUPrecruitment() {
     cout << "Pryo balance: " << pryoBl << endl;
     cout << "--------------------------------------" << endl;
 
-    cout << " " << endl;
+    cout << endl;
     cout << "Please select 1 or 2 to roll" << endl;
     cout << "[1] Recruit 1: 120 Pryo" << endl;
     cout << "[2] Recruit 10: 1200 Pryo" << endl;
     cout << "[3] Set rate-up students (2/3/4/5)" << endl;
     cout << "[4] Redeem a rate-up student (cost 200 points)" << endl;
     cout << "[5] Back to main menu" << endl;
-    cout << " " << endl;
+    cout << endl;
 
     cin >> select;
 
@@ -1004,7 +1011,7 @@ char choose;
 char choose2;
 
     if (select == 1) {
-        cout << " "<< endl;
+        cout << endl;
         cout << "Sensei, are you sure to spend 120 Pryo for a single pull? (y/n)" << endl;
         cout << "You have " << pryoBl << " Pryo left" << endl;
         cin >> choose;
@@ -1021,20 +1028,20 @@ char choose2;
         savePryoBalance();
         recruit1();
         cout << "Pryo left: " << pryoBl << endl;
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         askOPi();
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
 	} else if (choose == 'y' && pryoBl < 120) {
 		cout << "You are broke, Sensei" << endl;
         cout << "Pryo left: " << pryoBl << endl;
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         askOPi();
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
 	} else if (choose == 'n' ) {
         pickUPrecruitment();
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     }
 
@@ -1043,20 +1050,20 @@ char choose2;
         savePryoBalance();
         recruit10();
         cout << "Pryo left: " << pryoBl << endl;
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         askOPi();
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
 	} else if (choose2 == 'y' && pryoBl < 1200) {
 		cout << "You are broke, Sensei, choose the single pull one instead" << endl;
         cout << "Pryo left: " << pryoBl << endl;
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         askOPi();
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
 	}  else if (choose2 == 'n') {
         pickUPrecruitment();
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     } 
 
@@ -1070,12 +1077,14 @@ char choose2;
 
     } else if(select == 5) {
         mainmenu();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     } else {
-        cout << " " << endl;
+        cout << endl;
         cout << "Invalid number/typing choose either a number in the range 1-5" << endl;
         pickUPrecruitment();
     }
+    cin.ignore();
 }
 
 void mainmenu() {
@@ -1085,7 +1094,7 @@ void mainmenu() {
     cout << "                     Hello, Sensei" << endl;
     cout << "           Welcome to the gacha system simulator" << endl;
     cout << "             Please choose a funtion below:" << endl;
-    cout << " " << endl;
+    cout << endl;
     cout << "[1]: View or add Pryo balance " << endl;
     cout << "[2]: Create current owned student list" << endl;
     cout << "[3]: Recruitment (Spark system)" << endl;
@@ -1106,13 +1115,14 @@ void mainmenu() {
         onlyVIEWonwedList();
     } else if (select == 5) {
         cout << "Press Enter to close the window..." << endl;
-        cin.get(); // Waits for the user to press Enter before continuing to exit (it didn't work actually)
+        _getch(); // Waits for the user to press Enter before continuing to exit
+        exit(0);
     } else if(select == 6) {
         quote();
     } else {
-        cout << " " << endl;
+        cout << endl;
         cout << "Invalid number/typing. Please choose either from the range 1-6" << endl;
-        cout << " " << endl;
+        cout << endl;
         cout << "[1]: View or add Pryo balance " << endl;
         cout << "[2]: Create current owned student list" << endl;
         cout << "[3]: Recruitment (Spark system)" << endl;

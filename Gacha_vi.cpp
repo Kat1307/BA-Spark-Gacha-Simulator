@@ -4,7 +4,6 @@
 #include <sstream>
 #include <string>
 #include <cmath>
-#include <cstdlib>
 #include <limits>
 #include <random>
 #include <iomanip>
@@ -13,6 +12,7 @@
 #include <chrono>
 #include <utility>
 #include <algorithm>
+#include <conio.h>
 
 
 using namespace std;
@@ -42,7 +42,7 @@ void yes() {
         mainmenu();
     } else {
         Invalid_choice();
-        cout << " " << endl;
+        cout << endl;
         yes();
     }
 }
@@ -59,7 +59,7 @@ void quote() {
         yes();
     } else {
         Invalid_choice2();
-        cout << " " << endl;
+        cout << endl;
         quote();
     }
 }
@@ -137,7 +137,7 @@ void display1() {
 
     // Step 3: Show student names
     cout << "\n              ===== Tên Học Sinh =====" << endl;
-    cout << " " << endl;
+    cout << endl;
 
     count = 0;
     for (int i = start; i < lines.size(); i++) {
@@ -188,7 +188,7 @@ void display5perRow() {
 
     //RARITIES with color
     cout << "\n      ===== Peek Độ Hiếm Roll =====" << endl;
-    cout << " " << endl;
+    cout << endl;
 
     int count = 0;
     for (int i = start; i < lines.size(); i++) {
@@ -205,6 +205,7 @@ void display5perRow() {
         }
 
         count++;
+        this_thread::sleep_for(chrono::milliseconds(150));
         if (count % 5 == 0) {
             cout << endl;
         }
@@ -216,7 +217,9 @@ void display5perRow() {
 
     // Step 3: Show student names
     cout << "\n              ===== Tên Học Sinh =====" << endl;
-    cout << " " << endl;
+    cout << endl;
+    this_thread::sleep_for(chrono::milliseconds(400));
+    cout << "Nhấn phím bất kỳ để tiếp tục" << endl;
 
     count = 0;
     for (int i = start; i < lines.size(); i++) {
@@ -236,6 +239,7 @@ void display5perRow() {
         }
 
         count++;
+        _getch();
         if (count % 5 == 0) {
             cout << endl;
         }
@@ -342,7 +346,7 @@ void removePoints(int amount) {
 void countLine() {
     int points = getCurrentPoints();
     // Output the final tally
-    cout << " " << endl;
+    cout << endl;
     cout << "Tổng Điểm Chiêu Mộ: " << points << endl;
 
 }
@@ -534,7 +538,7 @@ void recruit1() {
     countLine();
     createOwnedList();
 
-    cout << " " << endl;
+    cout << endl;
     cout << "\n Tất Cả ROLL đều được lưu vào file point_count_vi.txt dành riêng cho việc đếm điểm chiêu mộ" << endl;
     cout << "Học sinh vừa được chiêu mộ sẽ được thêm vào danh sách học sinh đã sở hữu hiện tại của bạn." << endl;
 }
@@ -642,7 +646,7 @@ void student_list() {
     cout << "\n Nhập số dòng cụ thể để xuất danh sách học sinh đã sở hữu hiện tại của bạn (cách nhau bởi dấu cách, Ví dụ: '1 3 5'): " << endl;
     cout << "*Lưu ý: Thầy giáo chỉ nên làm một lần duy nhất (nếu chạy chương trình này lần đầu tiên hoặc thay đổi danh sách học sinh)," << endl;
     cout << " vì việc này SẼ GHI ĐÈ danh sách nếu danh sách đấy nếu có nội dung bên trong!" << endl;
-    cout << " " << endl;
+    cout << endl;
     string inputBuffer;
     std::getline(cin, inputBuffer);
 
@@ -706,9 +710,9 @@ void menuloop() {
         cout << "Press Enter to close the window..." << endl;
         cin.get(); // Waits for the user to press Enter before continuing to exit
     } else {
-        cout << " " << endl;
+        cout << endl;
         cout << "Số/chữ được nhập không hợp lệ, chỉ chọn số từ khoảng 1-6" << endl;
-        cout << " " << endl;
+        cout << endl;
         cout << "[1]: Xem hoặc thêm số dư đá Pryo " << endl;
         cout << "[2]: Tạo danh sách học sinh đã sở hữu hiện tại" << endl;
         cout << "[3]: Chiêu Mộ Học Sinh! (Cơ chế Spark)" << endl;
@@ -722,19 +726,22 @@ void menuloop() {
 void askOPi() {
 
     int select;
-    cout << " " << endl;
+    cout << endl;
     cout << "[1] Thoát chiêu mộ học sinh (về Menu)" << endl;
     cout << "[2] Ở lại chiêu mộ tiếp" << endl;
-    cout << " " << endl;
+    cout << endl;
 
     cin >> select;
 
     if (select == 1) {
         mainmenu();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     } else if (select == 2) {
         pickUPrecruitment();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     } else {
         cout << "Số/chữ được nhập không hợp lệ, chỉ chọn 1 hoặc 2" << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         askOPi();
     }
 }
@@ -987,14 +994,14 @@ void pickUPrecruitment() {
     cout << "Số DƯ ĐÁ Pryo: " << pryoBl << endl;
     cout << "--------------------------------------" << endl;
 
-    cout << " " << endl;
+    cout << endl;
     cout << "Hãy chọn số 1 hoặc 2 để roll" << endl;
     cout << "[1] Chiêu Mộ 1: 120 Pryo" << endl;
     cout << "[2] Chiêu Mộ 10: 1200 Pryo" << endl;
     cout << "[3] Thiết Lập Banner Học Sinh (2/3/4/5)" << endl;
     cout << "[4] Đổi Banner Học Sinh (tốn 200 điểm chiêu mộ)" << endl;
     cout << "[5] Về Menu Chính" << endl;
-    cout << " " << endl;
+    cout << endl;
 
     cin >> select;
 
@@ -1021,20 +1028,20 @@ char choose2;
         savePryoBalance();
         recruit1();
         cout << "Pryo còn lại: " << pryoBl << endl;
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         askOPi();
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
 	} else if (choose == 'y' && pryoBl < 120) {
 		cout << "Thầy nghèo quá, Sensei" << endl;
         cout << "Pryo còn lại: " << pryoBl << endl;
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         askOPi();
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
 	} else if (choose == 'n' ) {
         pickUPrecruitment();
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     }
 
@@ -1043,20 +1050,20 @@ char choose2;
         savePryoBalance();
         recruit10();
         cout << "Pryo còn lại: " << pryoBl << endl;
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         askOPi();
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
 	} else if (choose2 == 'y' && pryoBl < 1200) {
 		cout << "Thầy nghèo quá, Sensei, hãy chọn lần chiêu mộ đơn thay vì 10" << endl;
         cout << "Pryo còn lại: " << pryoBl << endl;
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         askOPi();
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
 	}  else if (choose2 == 'n') {
         pickUPrecruitment();
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     } 
 
@@ -1070,12 +1077,14 @@ char choose2;
 
     } else if(select == 5) {
         mainmenu();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     } else {
-        cout << " " << endl;
+        cout << endl;
         cout << "Lựa chọn không hợp lệ, vui lòng chọn một chức năng trong khoảng 1-5" << endl;
         pickUPrecruitment();
     }
+    cin.ignore();
 }
 
 void mainmenu() {
@@ -1085,7 +1094,7 @@ void mainmenu() {
     cout << "                     Xin chào, Sensei" << endl;
     cout << "           Chào mừng đến với giả lập gacha Blue Archive" << endl;
     cout << "             Hãy chọn một chức năng bên dưới:" << endl;
-    cout << " " << endl;
+    cout << endl;
     cout << "[1]: Xem hoặc thêm số dư đá Pryo " << endl;
     cout << "[2]: Tạo danh sách học sinh đã sở hữu hiện tại" << endl;
     cout << "[3]: Chiêu Mộ Học Sinh! (Cơ chế Spark)" << endl;
@@ -1106,13 +1115,14 @@ void mainmenu() {
         onlyVIEWonwedList();
     } else if (select == 5) {
         cout << "Nhấn Enter để đóng cửa sổ..." << endl;
-        cin.get(); // Waits for the user to press Enter before continuing to exit (it didn't work)
+        _getch(); // Waits for the user to press Enter before continuing to exit
+        exit(0);
     } else if(select == 6) {
         quote();
     } else {
-        cout << " " << endl;
+        cout << endl;
         cout << "Số/chữ được nhập không hợp lệ, hãy chọn một chức năng chỉ trong khoảng tầm số 1-6" << endl;
-        cout << " " << endl;
+        cout << endl;
         cout << "[1]: Xem hoặc thêm số dư đá Pryo " << endl;
         cout << "[2]: Tạo danh sách học sinh đã sở hữu hiện tại" << endl;
         cout << "[3]: Chiêu Mộ Học Sinh! (Cơ chế Spark)" << endl;
